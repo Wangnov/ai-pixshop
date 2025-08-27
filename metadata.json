@@ -1,0 +1,6 @@
+{
+  "name": "AI图像工坊",
+  "description": "一款功能强大的 AI 照片编辑器。使用简单的文本提示对您的图像进行修饰、应用创意滤镜和进行专业调整。",
+  "requestFramePermissions": [],
+  "prompt": ""
+}
