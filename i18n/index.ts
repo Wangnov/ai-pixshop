@@ -25,7 +25,7 @@ i18n
   .init({
     resources,
     fallbackLng: 'zh',
-    lng: 'zh', // 默认中文
+    // 移除固定的lng设置，让LanguageDetector自动检测
     
     debug: process.env.NODE_ENV === 'development',
 

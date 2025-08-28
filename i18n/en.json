@@ -102,5 +102,10 @@
   "language": {
     "switchLanguage": "切换到中文",
     "currentLanguage": "English"
+  },
+  "theme": {
+    "darkMode": "Dark Mode",
+    "lightMode": "Light Mode", 
+    "autoMode": "Follow System"
   }
 }
