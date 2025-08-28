@@ -1,0 +1,22 @@
+{
+    "env": {
+        "ANTHROPIC_BASE_URL": "https://co.yes.vg",
+        "ANTHROPIC_AUTH_TOKEN": "cr_f897cfe283029b28c8be4cdfca4b7c0b8f160b423d29aa4ed05291e661412403"
+    },
+    "statusLine": {
+        "type": "command",
+        "command": "npx claude-code-statusline-pro@latest --theme powerline"
+    },
+    "hooks": {
+        "SessionStart": [
+            {
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "echo \"Current Time: $(date)\""
+                    }
+                ]
+            }
+        ]
+    }
+}
