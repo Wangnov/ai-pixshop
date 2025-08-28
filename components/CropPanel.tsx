@@ -5,6 +5,8 @@
 
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useTheme } from '../contexts/ThemeContext';
+import { getThemeStyles } from '../utils/themeStyles';
 
 interface CropPanelProps {
   onApplyCrop: () => void;
@@ -18,6 +20,8 @@ type AspectRatio = 'free' | 'square' | 'widescreen';
 const CropPanel: React.FC<CropPanelProps> = ({ onApplyCrop, onSetAspect, isLoading, isCropping }) => {
   const [activeAspect, setActiveAspect] = useState<AspectRatio>('free');
   const { t } = useTranslation();
+  const { actualTheme } = useTheme();
+  const styles = getThemeStyles(actualTheme);
   
   const handleAspectChange = (aspect: AspectRatio, value: number | undefined) => {
     setActiveAspect(aspect);
@@ -31,21 +35,21 @@ const CropPanel: React.FC<CropPanelProps> = ({ onApplyCrop, onSetAspect, isLoadi
   ];
 
   return (
-    <div className="w-full bg-gray-800/50 border border-gray-700 rounded-lg p-4 flex flex-col items-center gap-4 animate-fade-in backdrop-blur-sm">
-      <h3 className="text-lg font-semibold text-gray-300">{t('crop.title')}</h3>
-      <p className="text-sm text-gray-400 -mt-2">{t('crop.instruction')}</p>
+    <div className={`w-full ${styles.bg.tertiary} ${styles.border.primary} border rounded-lg p-4 flex flex-col items-center gap-4 animate-fade-in backdrop-blur-sm transition-colors duration-300`}>
+      <h3 className={`text-lg font-semibold ${styles.text.secondary}`}>{t('crop.title')}</h3>
+      <p className={`text-sm ${styles.text.tertiary} -mt-2`}>{t('crop.instruction')}</p>
       
       <div className="flex items-center gap-2">
-        <span className="text-sm font-medium text-gray-400">{t('crop.aspectRatio')}</span>
+        <span className={`text-sm font-medium ${styles.text.tertiary}`}>{t('crop.aspectRatio')}</span>
         {aspects.map(({ key, value }) => (
           <button
             key={key}
             onClick={() => handleAspectChange(key, value)}
             disabled={isLoading}
-            className={`px-4 py-2 rounded-md text-base font-semibold transition-all duration-200 active:scale-95 disabled:opacity-50 ${
+            className={`px-4 py-2 rounded-md text-base font-semibold transition-all duration-200 ${styles.interactive.pressed} disabled:opacity-50 ${
               activeAspect === key 
               ? 'bg-gradient-to-br from-blue-600 to-blue-500 text-white shadow-md shadow-blue-500/20' 
-              : 'bg-white/10 hover:bg-white/20 text-gray-200'
+              : `${styles.interactive.default} ${styles.interactive.hover} ${styles.text.input}`
             }`}
           >
             {t(`crop.ratios.${key}`)}

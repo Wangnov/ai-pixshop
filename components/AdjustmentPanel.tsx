@@ -5,6 +5,8 @@
 
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useTheme } from '../contexts/ThemeContext';
+import { getThemeStyles } from '../utils/themeStyles';
 
 interface AdjustmentPanelProps {
   onApplyAdjustment: (prompt: string) => void;
@@ -15,6 +17,8 @@ const AdjustmentPanel: React.FC<AdjustmentPanelProps> = ({ onApplyAdjustment, is
   const [selectedPresetPrompt, setSelectedPresetPrompt] = useState<string | null>(null);
   const [customPrompt, setCustomPrompt] = useState('');
   const { t } = useTranslation();
+  const { actualTheme } = useTheme();
+  const styles = getThemeStyles(actualTheme);
 
   const presets = [
     { name: t('adjustments.presets.blur'), prompt: '应用逼真的景深效果，使背景模糊，同时保持主体清晰对焦。' },
@@ -42,8 +46,8 @@ const AdjustmentPanel: React.FC<AdjustmentPanelProps> = ({ onApplyAdjustment, is
   };
 
   return (
-    <div className="w-full bg-gray-800/50 border border-gray-700 rounded-lg p-4 flex flex-col gap-4 animate-fade-in backdrop-blur-sm">
-      <h3 className="text-lg font-semibold text-center text-gray-300">{t('adjustments.title')}</h3>
+    <div className={`w-full ${styles.bg.tertiary} ${styles.border.primary} border rounded-lg p-4 flex flex-col gap-4 animate-fade-in backdrop-blur-sm transition-colors duration-300`}>
+      <h3 className={`text-lg font-semibold text-center ${styles.text.secondary}`}>{t('adjustments.title')}</h3>
       
       <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
         {presets.map(preset => (
@@ -51,7 +55,7 @@ const AdjustmentPanel: React.FC<AdjustmentPanelProps> = ({ onApplyAdjustment, is
             key={preset.name}
             onClick={() => handlePresetClick(preset.prompt)}
             disabled={isLoading}
-            className={`w-full text-center bg-white/10 border border-transparent text-gray-200 font-semibold py-3 px-4 rounded-md transition-all duration-200 ease-in-out hover:bg-white/20 hover:border-white/20 active:scale-95 text-base disabled:opacity-50 disabled:cursor-not-allowed ${selectedPresetPrompt === preset.prompt ? 'ring-2 ring-offset-2 ring-offset-gray-800 ring-blue-500' : ''}`}
+            className={`w-full text-center ${styles.interactive.default} border border-transparent ${styles.text.input} font-semibold py-3 px-4 rounded-md transition-all duration-200 ease-in-out ${styles.interactive.hover} hover:border-opacity-20 ${styles.interactive.pressed} text-base disabled:opacity-50 disabled:cursor-not-allowed ${selectedPresetPrompt === preset.prompt ? `ring-2 ring-offset-2 ${actualTheme === 'dark' ? 'ring-offset-gray-800' : 'ring-offset-white'} ring-blue-500` : ''}`}
           >
             {preset.name}
           </button>
@@ -63,7 +67,7 @@ const AdjustmentPanel: React.FC<AdjustmentPanelProps> = ({ onApplyAdjustment, is
         value={customPrompt}
         onChange={handleCustomChange}
         placeholder={t('adjustments.customPlaceholder')}
-        className="flex-grow bg-gray-800 border border-gray-600 text-gray-200 rounded-lg p-4 focus:ring-2 focus:ring-blue-500 focus:outline-none transition w-full disabled:cursor-not-allowed disabled:opacity-60 text-base"
+        className={`flex-grow ${styles.bg.solid} ${styles.border.primary} border ${styles.text.input} rounded-lg p-4 focus:ring-2 focus:ring-blue-500 focus:outline-none transition w-full disabled:cursor-not-allowed disabled:opacity-60 text-base`}
         disabled={isLoading}
       />
 
