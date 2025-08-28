@@ -37,6 +37,7 @@ const dataURLtoFile = (dataurl: string, filename: string): File => {
 }
 
 type Tab = 'retouch' | 'adjust' | 'filters' | 'crop';
+type AppMode = 'edit' | 'draw';
 
 const AppContent: React.FC = () => {
   const { t } = useTranslation();
@@ -50,6 +51,7 @@ const AppContent: React.FC = () => {
   const [editHotspot, setEditHotspot] = useState<{ x: number, y: number } | null>(null);
   const [displayHotspot, setDisplayHotspot] = useState<{ x: number, y: number } | null>(null);
   const [activeTab, setActiveTab] = useState<Tab>('retouch');
+  const [appMode, setAppMode] = useState<AppMode>('edit');
   
   const [crop, setCrop] = useState<Crop>();
   const [completedCrop, setCompletedCrop] = useState<PixelCrop>();
@@ -306,6 +308,20 @@ const AppContent: React.FC = () => {
 };
 
   const renderContent = () => {
+    // 绘图模式占位页面
+    if (appMode === 'draw') {
+      return (
+        <div className="text-center animate-fade-in max-w-2xl mx-auto flex flex-col items-center gap-6">
+          <div className={`${styles.bg.panel} ${styles.border.primary} border rounded-lg p-12`}>
+            <h2 className={`text-3xl font-bold mb-4 ${styles.text.primary}`}>🎨 {t('modes.draw')}</h2>
+            <p className={`text-lg ${styles.text.secondary}`}>{t('draw.comingSoon')}</p>
+            <p className={`text-sm mt-2 ${styles.text.tertiary}`}>{t('draw.switchToEdit')}</p>
+          </div>
+        </div>
+      );
+    }
+
+    // 编辑模式 - 现有逻辑
     if (error) {
        return (
            <div className="text-center animate-fade-in bg-red-500/10 border border-red-500/20 p-8 rounded-lg max-w-2xl mx-auto flex flex-col items-center gap-4">
@@ -512,7 +528,7 @@ const AppContent: React.FC = () => {
       {/* 只在日间模式显示浮动光斑 */}
       {actualTheme === 'light' && <FloatingLights />}
       
-      <Header />
+      <Header activeMode={appMode} onModeChange={setAppMode} />
       <main className={`flex-grow w-full max-w-[1600px] mx-auto p-4 md:p-8 flex justify-center ${currentImage ? 'items-start' : 'items-center'} relative z-10`}>
         {renderContent()}
       </main>
