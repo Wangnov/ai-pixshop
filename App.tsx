@@ -15,6 +15,9 @@ import CropPanel from './components/CropPanel';
 import { UndoIcon, RedoIcon, EyeIcon } from './components/icons';
 import StartScreen from './components/StartScreen';
 import { useTranslation } from 'react-i18next';
+import { ThemeProvider, useTheme } from './contexts/ThemeContext';
+import { getThemeStyles } from './utils/themeStyles';
+import FloatingLights from './components/FloatingLights';
 
 // Helper to convert a data URL string to a File object
 const dataURLtoFile = (dataurl: string, filename: string): File => {
@@ -35,8 +38,10 @@ const dataURLtoFile = (dataurl: string, filename: string): File => {
 
 type Tab = 'retouch' | 'adjust' | 'filters' | 'crop';
 
-const App: React.FC = () => {
+const AppContent: React.FC = () => {
   const { t } = useTranslation();
+  const { actualTheme } = useTheme();
+  const styles = getThemeStyles(actualTheme);
   const [history, setHistory] = useState<File[]>([]);
   const [historyIndex, setHistoryIndex] = useState<number>(-1);
   const [prompt, setPrompt] = useState<string>('');
@@ -364,7 +369,7 @@ const App: React.FC = () => {
 
     return (
       <div className="w-full max-w-4xl mx-auto flex flex-col items-center gap-6 animate-fade-in">
-        <div className="relative w-full shadow-2xl rounded-xl overflow-hidden bg-black/20">
+        <div className={`relative w-full ${styles.shadow.primary} rounded-xl overflow-hidden ${styles.bg.card} transition-colors duration-300`}>
             {isLoading && (
                 <div className="absolute inset-0 bg-black/70 z-30 flex flex-col items-center justify-center gap-4 animate-fade-in">
                     <Spinner />
@@ -394,7 +399,7 @@ const App: React.FC = () => {
             )}
         </div>
         
-        <div className="w-full bg-gray-800/80 border border-gray-700/80 rounded-lg p-2 flex items-center justify-center gap-2 backdrop-blur-sm">
+        <div className={`w-full ${styles.bg.panel} ${styles.border.primary} border rounded-lg p-2 flex items-center justify-center gap-2 backdrop-blur-sm transition-colors duration-300`}>
             {(['retouch', 'crop', 'adjust', 'filters'] as Tab[]).map(tab => (
                  <button
                     key={tab}
@@ -402,7 +407,7 @@ const App: React.FC = () => {
                     className={`w-full capitalize font-semibold py-3 px-5 rounded-md transition-all duration-200 text-base ${
                         activeTab === tab 
                         ? 'bg-gradient-to-br from-blue-500 to-cyan-400 text-white shadow-lg shadow-cyan-500/40' 
-                        : 'text-gray-300 hover:text-white hover:bg-white/10'
+                        : `${styles.text.secondary} ${styles.interactive.hoverText} ${styles.interactive.hover}`
                     }`}
                 >
                     {tabTranslations[tab]}
@@ -413,7 +418,7 @@ const App: React.FC = () => {
         <div className="w-full">
             {activeTab === 'retouch' && (
                 <div className="flex flex-col items-center gap-4">
-                    <p className="text-md text-gray-400">
+                    <p className={`text-md ${styles.text.tertiary}`}>
                         {editHotspot ? t('retouch.goodPrompt') : t('retouch.clickPrompt')}
                     </p>
                     <form onSubmit={(e) => { e.preventDefault(); handleGenerate(); }} className="w-full flex items-center gap-2">
@@ -422,7 +427,7 @@ const App: React.FC = () => {
                             value={prompt}
                             onChange={(e) => setPrompt(e.target.value)}
                             placeholder={editHotspot ? t('retouch.placeholder.active') : t('retouch.placeholder.inactive')}
-                            className="flex-grow bg-gray-800 border border-gray-700 text-gray-200 rounded-lg p-5 text-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition w-full disabled:cursor-not-allowed disabled:opacity-60"
+                            className={`flex-grow ${styles.bg.solid} ${styles.border.primary} border ${styles.text.input} rounded-lg p-5 text-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition w-full disabled:cursor-not-allowed disabled:opacity-60`}
                             disabled={isLoading || !editHotspot}
                         />
                         <button 
@@ -444,7 +449,7 @@ const App: React.FC = () => {
             <button 
                 onClick={handleUndo}
                 disabled={!canUndo}
-                className="flex items-center justify-center text-center bg-white/10 border border-white/20 text-gray-200 font-semibold py-3 px-5 rounded-md transition-all duration-200 ease-in-out hover:bg-white/20 hover:border-white/30 active:scale-95 text-base disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-white/5"
+                className={`flex items-center justify-center text-center ${styles.interactive.default} ${styles.border.translucent} border ${styles.text.input} font-semibold py-3 px-5 rounded-md transition-all duration-200 ease-in-out ${styles.interactive.hover} ${styles.interactive.hoverBorder} ${styles.interactive.pressed} text-base disabled:opacity-50 disabled:cursor-not-allowed`}
                 aria-label={t('aria.undoOperation')}
             >
                 <UndoIcon className="w-5 h-5 mr-2" />
@@ -453,14 +458,14 @@ const App: React.FC = () => {
             <button 
                 onClick={handleRedo}
                 disabled={!canRedo}
-                className="flex items-center justify-center text-center bg-white/10 border border-white/20 text-gray-200 font-semibold py-3 px-5 rounded-md transition-all duration-200 ease-in-out hover:bg-white/20 hover:border-white/30 active:scale-95 text-base disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-white/5"
+                className={`flex items-center justify-center text-center ${styles.interactive.default} ${styles.border.translucent} border ${styles.text.input} font-semibold py-3 px-5 rounded-md transition-all duration-200 ease-in-out ${styles.interactive.hover} ${styles.interactive.hoverBorder} ${styles.interactive.pressed} text-base disabled:opacity-50 disabled:cursor-not-allowed`}
                 aria-label={t('aria.redoOperation')}
             >
                 <RedoIcon className="w-5 h-5 mr-2" />
                 {t('actions.redo')}
             </button>
             
-            <div className="h-6 w-px bg-gray-600 mx-1 hidden sm:block"></div>
+            <div className={`h-6 w-px ${actualTheme === 'dark' ? 'bg-gray-600' : 'bg-gray-300'} mx-1 hidden sm:block transition-colors duration-300`}></div>
 
             {canUndo && (
               <button 
@@ -469,7 +474,7 @@ const App: React.FC = () => {
                   onMouseLeave={() => setIsComparing(false)}
                   onTouchStart={() => setIsComparing(true)}
                   onTouchEnd={() => setIsComparing(false)}
-                  className="flex items-center justify-center text-center bg-white/10 border border-white/20 text-gray-200 font-semibold py-3 px-5 rounded-md transition-all duration-200 ease-in-out hover:bg-white/20 hover:border-white/30 active:scale-95 text-base"
+                  className={`flex items-center justify-center text-center ${styles.interactive.default} ${styles.border.translucent} border ${styles.text.input} font-semibold py-3 px-5 rounded-md transition-all duration-200 ease-in-out ${styles.interactive.hover} ${styles.interactive.hoverBorder} ${styles.interactive.pressed} text-base`}
                   aria-label={t('aria.compareWithOriginal')}
               >
                   <EyeIcon className="w-5 h-5 mr-2" />
@@ -480,13 +485,13 @@ const App: React.FC = () => {
             <button 
                 onClick={handleReset}
                 disabled={!canUndo}
-                className="text-center bg-transparent border border-white/20 text-gray-200 font-semibold py-3 px-5 rounded-md transition-all duration-200 ease-in-out hover:bg-white/10 hover:border-white/30 active:scale-95 text-base disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-transparent"
+                className={`text-center bg-transparent ${styles.border.translucent} border ${styles.text.input} font-semibold py-3 px-5 rounded-md transition-all duration-200 ease-in-out ${styles.interactive.hover} ${styles.interactive.hoverBorder} ${styles.interactive.pressed} text-base disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-transparent`}
               >
                 {t('actions.reset')}
             </button>
             <button 
                 onClick={handleUploadNew}
-                className="text-center bg-white/10 border border-white/20 text-gray-200 font-semibold py-3 px-5 rounded-md transition-all duration-200 ease-in-out hover:bg-white/20 hover:border-white/30 active:scale-95 text-base"
+                className={`text-center ${styles.interactive.default} ${styles.border.translucent} border ${styles.text.input} font-semibold py-3 px-5 rounded-md transition-all duration-200 ease-in-out ${styles.interactive.hover} ${styles.interactive.hoverBorder} ${styles.interactive.pressed} text-base`}
             >
                 {t('actions.uploadNew')}
             </button>
@@ -503,12 +508,23 @@ const App: React.FC = () => {
   };
   
   return (
-    <div className="min-h-screen text-gray-100 flex flex-col">
+    <div className={`min-h-screen ${styles.bg.primary} ${styles.text.primary} flex flex-col transition-colors duration-300 relative`}>
+      {/* 只在日间模式显示浮动光斑 */}
+      {actualTheme === 'light' && <FloatingLights />}
+      
       <Header />
-      <main className={`flex-grow w-full max-w-[1600px] mx-auto p-4 md:p-8 flex justify-center ${currentImage ? 'items-start' : 'items-center'}`}>
+      <main className={`flex-grow w-full max-w-[1600px] mx-auto p-4 md:p-8 flex justify-center ${currentImage ? 'items-start' : 'items-center'} relative z-10`}>
         {renderContent()}
       </main>
     </div>
+  );
+};
+
+const App: React.FC = () => {
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
   );
 };
 

@@ -6,6 +6,8 @@
 import React, { useState } from 'react';
 import { UploadIcon, MagicWandIcon, PaletteIcon, SunIcon } from './icons';
 import { useTranslation, Trans } from 'react-i18next';
+import { useTheme } from '../contexts/ThemeContext';
+import { getThemeStyles } from '../utils/themeStyles';
 
 interface StartScreenProps {
   onFileSelect: (files: FileList | null) => void;
@@ -14,6 +16,8 @@ interface StartScreenProps {
 const StartScreen: React.FC<StartScreenProps> = ({ onFileSelect }) => {
   const [isDraggingOver, setIsDraggingOver] = useState(false);
   const { t } = useTranslation();
+  const { actualTheme } = useTheme();
+  const styles = getThemeStyles(actualTheme);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onFileSelect(e.target.files);
@@ -31,7 +35,7 @@ const StartScreen: React.FC<StartScreenProps> = ({ onFileSelect }) => {
       }}
     >
       <div className="flex flex-col items-center gap-6 animate-fade-in">
-        <h1 className="text-5xl font-extrabold tracking-tight text-gray-100 sm:text-6xl md:text-7xl">
+        <h1 className={`text-5xl font-extrabold tracking-tight ${styles.text.primary} sm:text-6xl md:text-7xl`}>
           <Trans 
             i18nKey="startScreen.title"
             components={[
@@ -39,7 +43,7 @@ const StartScreen: React.FC<StartScreenProps> = ({ onFileSelect }) => {
             ]}
           />
         </h1>
-        <p className="max-w-2xl text-lg text-gray-400 md:text-xl">
+        <p className={`max-w-2xl text-lg ${styles.text.tertiary} md:text-xl`}>
           {t('startScreen.subtitle')}
         </p>
 
@@ -49,31 +53,31 @@ const StartScreen: React.FC<StartScreenProps> = ({ onFileSelect }) => {
                 {t('startScreen.uploadButton')}
             </label>
             <input id="image-upload-start" type="file" className="hidden" accept="image/*" onChange={handleFileChange} />
-            <p className="text-sm text-gray-500">{t('startScreen.dragAndDrop')}</p>
+            <p className={`text-sm ${styles.text.placeholder}`}>{t('startScreen.dragAndDrop')}</p>
         </div>
 
         <div className="mt-16 w-full">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div className="bg-black/20 p-6 rounded-lg border border-gray-700/50 flex flex-col items-center text-center">
-                    <div className="flex items-center justify-center w-12 h-12 bg-gray-700 rounded-full mb-4">
+                <div className={`${styles.bg.card} p-6 rounded-lg ${styles.border.secondary} border flex flex-col items-center text-center transition-colors duration-300`}>
+                    <div className={`flex items-center justify-center w-12 h-12 ${actualTheme === 'dark' ? 'bg-gray-700' : 'bg-gray-200'} rounded-full mb-4 transition-colors duration-300`}>
                        <MagicWandIcon className="w-6 h-6 text-blue-400" />
                     </div>
-                    <h3 className="text-xl font-bold text-gray-100">{t('startScreen.features.retouch.title')}</h3>
-                    <p className="mt-2 text-gray-400">{t('startScreen.features.retouch.description')}</p>
+                    <h3 className={`text-xl font-bold ${styles.text.primary}`}>{t('startScreen.features.retouch.title')}</h3>
+                    <p className={`mt-2 ${styles.text.tertiary}`}>{t('startScreen.features.retouch.description')}</p>
                 </div>
-                <div className="bg-black/20 p-6 rounded-lg border border-gray-700/50 flex flex-col items-center text-center">
-                    <div className="flex items-center justify-center w-12 h-12 bg-gray-700 rounded-full mb-4">
+                <div className={`${styles.bg.card} p-6 rounded-lg ${styles.border.secondary} border flex flex-col items-center text-center transition-colors duration-300`}>
+                    <div className={`flex items-center justify-center w-12 h-12 ${actualTheme === 'dark' ? 'bg-gray-700' : 'bg-gray-200'} rounded-full mb-4 transition-colors duration-300`}>
                        <PaletteIcon className="w-6 h-6 text-blue-400" />
                     </div>
-                    <h3 className="text-xl font-bold text-gray-100">{t('startScreen.features.filters.title')}</h3>
-                    <p className="mt-2 text-gray-400">{t('startScreen.features.filters.description')}</p>
+                    <h3 className={`text-xl font-bold ${styles.text.primary}`}>{t('startScreen.features.filters.title')}</h3>
+                    <p className={`mt-2 ${styles.text.tertiary}`}>{t('startScreen.features.filters.description')}</p>
                 </div>
-                <div className="bg-black/20 p-6 rounded-lg border border-gray-700/50 flex flex-col items-center text-center">
-                    <div className="flex items-center justify-center w-12 h-12 bg-gray-700 rounded-full mb-4">
+                <div className={`${styles.bg.card} p-6 rounded-lg ${styles.border.secondary} border flex flex-col items-center text-center transition-colors duration-300`}>
+                    <div className={`flex items-center justify-center w-12 h-12 ${actualTheme === 'dark' ? 'bg-gray-700' : 'bg-gray-200'} rounded-full mb-4 transition-colors duration-300`}>
                        <SunIcon className="w-6 h-6 text-blue-400" />
                     </div>
-                    <h3 className="text-xl font-bold text-gray-100">{t('startScreen.features.adjustments.title')}</h3>
-                    <p className="mt-2 text-gray-400">{t('startScreen.features.adjustments.description')}</p>
+                    <h3 className={`text-xl font-bold ${styles.text.primary}`}>{t('startScreen.features.adjustments.title')}</h3>
+                    <p className={`mt-2 ${styles.text.tertiary}`}>{t('startScreen.features.adjustments.description')}</p>
                 </div>
             </div>
         </div>
