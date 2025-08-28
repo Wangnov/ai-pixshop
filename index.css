@@ -14,3 +14,33 @@
     transform: translateY(0);
   }
 }
+
+/* 日间模式浮动光斑动画 */
+.floating-light {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+  background: radial-gradient(circle, rgba(255, 200, 100, 0.25), rgba(100, 200, 255, 0.15), transparent);
+  animation: floatLight 8s ease-in-out infinite;
+  filter: blur(1px);
+}
+
+@keyframes floatLight {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.3;
+  }
+  25% {
+    transform: translate3d(20px, -30px, 0) scale(1.1);
+    opacity: 0.2;
+  }
+  50% {
+    transform: translate3d(-15px, -60px, 0) scale(0.9);
+    opacity: 0.4;
+  }
+  75% {
+    transform: translate3d(30px, -20px, 0) scale(1.05);
+    opacity: 0.25;
+  }
+}
