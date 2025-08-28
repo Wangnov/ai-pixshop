@@ -13,6 +13,10 @@ export default defineConfig(({ mode }) => {
         port: 5192,
         host: '0.0.0.0'
       },
+      server: {
+        port: 5192,
+        host: '0.0.0.0'
+      },
       resolve: {
         alias: {
           '@': path.resolve(__dirname, '.'),
