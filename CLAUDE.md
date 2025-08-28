@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## 项目概述
 
-AI图像工坊 - 基于React的AI驱动图片编辑器，集成Google Gemini AI进行智能图像处理。
+AI像素工坊 - 基于React的AI驱动图片编辑器，集成Google Gemini AI进行智能图像处理。
 
 ## 常用命令
 

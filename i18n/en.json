@@ -1,6 +1,6 @@
 {
   "app": {
-    "title": "AI Image Workshop",
+    "title": "AI Pixshop",
     "loading": "AI is working its magic..."
   },
   "startScreen": {
@@ -105,7 +105,7 @@
   },
   "theme": {
     "darkMode": "Dark Mode",
-    "lightMode": "Light Mode", 
+    "lightMode": "Light Mode",
     "autoMode": "Follow System"
   }
 }
