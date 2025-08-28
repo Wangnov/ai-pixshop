@@ -5,6 +5,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import './i18n'; // 初始化i18n
 import App from './App';
 
 const rootElement = document.getElementById('root');

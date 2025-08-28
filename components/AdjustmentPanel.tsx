@@ -4,6 +4,7 @@
 */
 
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface AdjustmentPanelProps {
   onApplyAdjustment: (prompt: string) => void;
@@ -13,12 +14,13 @@ interface AdjustmentPanelProps {
 const AdjustmentPanel: React.FC<AdjustmentPanelProps> = ({ onApplyAdjustment, isLoading }) => {
   const [selectedPresetPrompt, setSelectedPresetPrompt] = useState<string | null>(null);
   const [customPrompt, setCustomPrompt] = useState('');
+  const { t } = useTranslation();
 
   const presets = [
-    { name: '模糊背景', prompt: '应用逼真的景深效果，使背景模糊，同时保持主体清晰对焦。' },
-    { name: '增强细节', prompt: '轻微增强图像的清晰度和细节，使其看起来自然。' },
-    { name: '暖色调光', prompt: '调整色温，为图像增添温暖的黄金时刻风格光照。' },
-    { name: '影棚光', prompt: '为主体添加引人注目的专业影棚光。' },
+    { name: t('adjustments.presets.blur'), prompt: '应用逼真的景深效果，使背景模糊，同时保持主体清晰对焦。' },
+    { name: t('adjustments.presets.enhance'), prompt: '轻微增强图像的清晰度和细节，使其看起来自然。' },
+    { name: t('adjustments.presets.warmLight'), prompt: '调整色温，为图像增添温暖的黄金时刻风格光照。' },
+    { name: t('adjustments.presets.studioLight'), prompt: '为主体添加引人注目的专业影棚光。' },
   ];
 
   const activePrompt = selectedPresetPrompt || customPrompt;
@@ -41,7 +43,7 @@ const AdjustmentPanel: React.FC<AdjustmentPanelProps> = ({ onApplyAdjustment, is
 
   return (
     <div className="w-full bg-gray-800/50 border border-gray-700 rounded-lg p-4 flex flex-col gap-4 animate-fade-in backdrop-blur-sm">
-      <h3 className="text-lg font-semibold text-center text-gray-300">应用专业调整</h3>
+      <h3 className="text-lg font-semibold text-center text-gray-300">{t('adjustments.title')}</h3>
       
       <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
         {presets.map(preset => (
@@ -60,7 +62,7 @@ const AdjustmentPanel: React.FC<AdjustmentPanelProps> = ({ onApplyAdjustment, is
         type="text"
         value={customPrompt}
         onChange={handleCustomChange}
-        placeholder="或描述一项调整（例如，'将背景更改为森林'）"
+        placeholder={t('adjustments.customPlaceholder')}
         className="flex-grow bg-gray-800 border border-gray-600 text-gray-200 rounded-lg p-4 focus:ring-2 focus:ring-blue-500 focus:outline-none transition w-full disabled:cursor-not-allowed disabled:opacity-60 text-base"
         disabled={isLoading}
       />
@@ -72,7 +74,7 @@ const AdjustmentPanel: React.FC<AdjustmentPanelProps> = ({ onApplyAdjustment, is
                 className="w-full bg-gradient-to-br from-blue-600 to-blue-500 text-white font-bold py-4 px-6 rounded-lg transition-all duration-300 ease-in-out shadow-lg shadow-blue-500/20 hover:shadow-xl hover:shadow-blue-500/40 hover:-translate-y-px active:scale-95 active:shadow-inner text-base disabled:from-blue-800 disabled:to-blue-700 disabled:shadow-none disabled:cursor-not-allowed disabled:transform-none whitespace-nowrap"
                 disabled={isLoading || !activePrompt.trim()}
             >
-                应用调整
+                {t('adjustments.applyButton')}
             </button>
         </div>
       )}

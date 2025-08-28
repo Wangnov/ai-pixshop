@@ -4,6 +4,7 @@
 */
 
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface FilterPanelProps {
   onApplyFilter: (prompt: string) => void;
@@ -13,12 +14,13 @@ interface FilterPanelProps {
 const FilterPanel: React.FC<FilterPanelProps> = ({ onApplyFilter, isLoading }) => {
   const [selectedPresetPrompt, setSelectedPresetPrompt] = useState<string | null>(null);
   const [customPrompt, setCustomPrompt] = useState('');
+  const { t } = useTranslation();
 
   const presets = [
-    { name: '合成波', prompt: '应用充满活力的80年代合成波美学，带有霓虹品红和青色光晕，以及微妙的扫描线。' },
-    { name: '动漫', prompt: '为图像赋予充满活力的日本动漫风格，具有粗线条、卡通渲染和饱和色彩。' },
-    { name: 'Lomo', prompt: '应用Lomography风格的交叉处理胶片效果，具有高对比度、过饱和色彩和暗角。' },
-    { name: '故障艺术', prompt: '将图像转换为带有数字故障效果和色差的未来主义全息投影。' },
+    { name: t('filters.presets.synthwave'), prompt: '应用充满活力的80年代合成波美学，带有霓虹品红和青色光晕，以及微妙的扫描线。' },
+    { name: t('filters.presets.anime'), prompt: '为图像赋予充满活力的日本动漫风格，具有粗线条、卡通渲染和饱和色彩。' },
+    { name: t('filters.presets.lomo'), prompt: '应用Lomography风格的交叉处理胶片效果，具有高对比度、过饱和色彩和暗角。' },
+    { name: t('filters.presets.glitch'), prompt: '将图像转换为带有数字故障效果和色差的未来主义全息投影。' },
   ];
   
   const activePrompt = selectedPresetPrompt || customPrompt;
@@ -41,7 +43,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({ onApplyFilter, isLoading }) =
 
   return (
     <div className="w-full bg-gray-800/50 border border-gray-700 rounded-lg p-4 flex flex-col gap-4 animate-fade-in backdrop-blur-sm">
-      <h3 className="text-lg font-semibold text-center text-gray-300">应用滤镜</h3>
+      <h3 className="text-lg font-semibold text-center text-gray-300">{t('filters.title')}</h3>
       
       <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
         {presets.map(preset => (
@@ -60,7 +62,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({ onApplyFilter, isLoading }) =
         type="text"
         value={customPrompt}
         onChange={handleCustomChange}
-        placeholder="或描述一个自定义滤镜（例如，'80年代合成波光晕'）"
+        placeholder={t('filters.customPlaceholder')}
         className="flex-grow bg-gray-800 border border-gray-600 text-gray-200 rounded-lg p-4 focus:ring-2 focus:ring-blue-500 focus:outline-none transition w-full disabled:cursor-not-allowed disabled:opacity-60 text-base"
         disabled={isLoading}
       />
@@ -72,7 +74,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({ onApplyFilter, isLoading }) =
             className="w-full bg-gradient-to-br from-blue-600 to-blue-500 text-white font-bold py-4 px-6 rounded-lg transition-all duration-300 ease-in-out shadow-lg shadow-blue-500/20 hover:shadow-xl hover:shadow-blue-500/40 hover:-translate-y-px active:scale-95 active:shadow-inner text-base disabled:from-blue-800 disabled:to-blue-700 disabled:shadow-none disabled:cursor-not-allowed disabled:transform-none whitespace-nowrap"
             disabled={isLoading || !activePrompt.trim()}
           >
-            应用滤镜
+            {t('filters.applyButton')}
           </button>
         </div>
       )}

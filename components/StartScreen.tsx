@@ -5,6 +5,7 @@
 
 import React, { useState } from 'react';
 import { UploadIcon, MagicWandIcon, PaletteIcon, SunIcon } from './icons';
+import { useTranslation, Trans } from 'react-i18next';
 
 interface StartScreenProps {
   onFileSelect: (files: FileList | null) => void;
@@ -12,6 +13,7 @@ interface StartScreenProps {
 
 const StartScreen: React.FC<StartScreenProps> = ({ onFileSelect }) => {
   const [isDraggingOver, setIsDraggingOver] = useState(false);
+  const { t } = useTranslation();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onFileSelect(e.target.files);
@@ -30,19 +32,24 @@ const StartScreen: React.FC<StartScreenProps> = ({ onFileSelect }) => {
     >
       <div className="flex flex-col items-center gap-6 animate-fade-in">
         <h1 className="text-5xl font-extrabold tracking-tight text-gray-100 sm:text-6xl md:text-7xl">
-          AI 驱动的照片编辑, <span className="text-blue-400">化繁为简</span>.
+          <Trans 
+            i18nKey="startScreen.title"
+            components={[
+              <span className="text-blue-400" key="highlight" />
+            ]}
+          />
         </h1>
         <p className="max-w-2xl text-lg text-gray-400 md:text-xl">
-          使用简单的文本提示修饰照片、应用创意滤镜或进行专业调整。无需复杂工具。
+          {t('startScreen.subtitle')}
         </p>
 
         <div className="mt-6 flex flex-col items-center gap-4">
             <label htmlFor="image-upload-start" className="relative inline-flex items-center justify-center px-10 py-5 text-xl font-bold text-white bg-blue-600 rounded-full cursor-pointer group hover:bg-blue-500 transition-colors">
                 <UploadIcon className="w-6 h-6 mr-3 transition-transform duration-500 ease-in-out group-hover:rotate-[360deg] group-hover:scale-110" />
-                上传图片
+                {t('startScreen.uploadButton')}
             </label>
             <input id="image-upload-start" type="file" className="hidden" accept="image/*" onChange={handleFileChange} />
-            <p className="text-sm text-gray-500">或拖放文件</p>
+            <p className="text-sm text-gray-500">{t('startScreen.dragAndDrop')}</p>
         </div>
 
         <div className="mt-16 w-full">
@@ -51,22 +58,22 @@ const StartScreen: React.FC<StartScreenProps> = ({ onFileSelect }) => {
                     <div className="flex items-center justify-center w-12 h-12 bg-gray-700 rounded-full mb-4">
                        <MagicWandIcon className="w-6 h-6 text-blue-400" />
                     </div>
-                    <h3 className="text-xl font-bold text-gray-100">精准修饰</h3>
-                    <p className="mt-2 text-gray-400">点击图像上的任意点，精确去除瑕疵、更改颜色或添加元素。</p>
+                    <h3 className="text-xl font-bold text-gray-100">{t('startScreen.features.retouch.title')}</h3>
+                    <p className="mt-2 text-gray-400">{t('startScreen.features.retouch.description')}</p>
                 </div>
                 <div className="bg-black/20 p-6 rounded-lg border border-gray-700/50 flex flex-col items-center text-center">
                     <div className="flex items-center justify-center w-12 h-12 bg-gray-700 rounded-full mb-4">
                        <PaletteIcon className="w-6 h-6 text-blue-400" />
                     </div>
-                    <h3 className="text-xl font-bold text-gray-100">创意滤镜</h3>
-                    <p className="mt-2 text-gray-400">用艺术风格转换照片。从复古外观到未来光晕，找到或创建完美的滤镜。</p>
+                    <h3 className="text-xl font-bold text-gray-100">{t('startScreen.features.filters.title')}</h3>
+                    <p className="mt-2 text-gray-400">{t('startScreen.features.filters.description')}</p>
                 </div>
                 <div className="bg-black/20 p-6 rounded-lg border border-gray-700/50 flex flex-col items-center text-center">
                     <div className="flex items-center justify-center w-12 h-12 bg-gray-700 rounded-full mb-4">
                        <SunIcon className="w-6 h-6 text-blue-400" />
                     </div>
-                    <h3 className="text-xl font-bold text-gray-100">专业调整</h3>
-                    <p className="mt-2 text-gray-400">增强光照、模糊背景或改变氛围。无需复杂工具即可获得影棚级效果。</p>
+                    <h3 className="text-xl font-bold text-gray-100">{t('startScreen.features.adjustments.title')}</h3>
+                    <p className="mt-2 text-gray-400">{t('startScreen.features.adjustments.description')}</p>
                 </div>
             </div>
         </div>

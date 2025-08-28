@@ -14,6 +14,7 @@ import AdjustmentPanel from './components/AdjustmentPanel';
 import CropPanel from './components/CropPanel';
 import { UndoIcon, RedoIcon, EyeIcon } from './components/icons';
 import StartScreen from './components/StartScreen';
+import { useTranslation } from 'react-i18next';
 
 // Helper to convert a data URL string to a File object
 const dataURLtoFile = (dataurl: string, filename: string): File => {
@@ -35,6 +36,7 @@ const dataURLtoFile = (dataurl: string, filename: string): File => {
 type Tab = 'retouch' | 'adjust' | 'filters' | 'crop';
 
 const App: React.FC = () => {
+  const { t } = useTranslation();
   const [history, setHistory] = useState<File[]>([]);
   const [historyIndex, setHistoryIndex] = useState<number>(-1);
   const [prompt, setPrompt] = useState<string>('');
@@ -105,17 +107,17 @@ const App: React.FC = () => {
 
   const handleGenerate = useCallback(async () => {
     if (!currentImage) {
-      setError('未加载要编辑的图像。');
+      setError(t('errors.noImage'));
       return;
     }
     
     if (!prompt.trim()) {
-        setError('请输入您的编辑描述。');
+        setError(t('errors.noPrompt'));
         return;
     }
 
     if (!editHotspot) {
-        setError('请在图像上点击以选择要编辑的区域。');
+        setError(t('errors.noHotspot'));
         return;
     }
 
@@ -129,17 +131,17 @@ const App: React.FC = () => {
         setEditHotspot(null);
         setDisplayHotspot(null);
     } catch (err) {
-        const errorMessage = err instanceof Error ? err.message : '发生未知错误。';
-        setError(`生成图像失败。 ${errorMessage}`);
+        const errorMessage = err instanceof Error ? err.message : t('errors.unknownError');
+        setError(t('errors.generateFailed', { error: errorMessage }));
         console.error(err);
     } finally {
         setIsLoading(false);
     }
-  }, [currentImage, prompt, editHotspot, addImageToHistory]);
+  }, [currentImage, prompt, editHotspot, addImageToHistory, t]);
   
   const handleApplyFilter = useCallback(async (filterPrompt: string) => {
     if (!currentImage) {
-      setError('未加载要应用滤镜的图像。');
+      setError(t('errors.noImageForFilter'));
       return;
     }
     
@@ -151,17 +153,17 @@ const App: React.FC = () => {
         const newImageFile = dataURLtoFile(filteredImageUrl, `filtered-${Date.now()}.png`);
         addImageToHistory(newImageFile);
     } catch (err) {
-        const errorMessage = err instanceof Error ? err.message : '发生未知错误。';
-        setError(`应用滤镜失败。 ${errorMessage}`);
+        const errorMessage = err instanceof Error ? err.message : t('errors.unknownError');
+        setError(t('errors.filterFailed', { error: errorMessage }));
         console.error(err);
     } finally {
         setIsLoading(false);
     }
-  }, [currentImage, addImageToHistory]);
+  }, [currentImage, addImageToHistory, t]);
   
   const handleApplyAdjustment = useCallback(async (adjustmentPrompt: string) => {
     if (!currentImage) {
-      setError('未加载要应用调整的图像。');
+      setError(t('errors.noImageForAdjustment'));
       return;
     }
     
@@ -173,17 +175,17 @@ const App: React.FC = () => {
         const newImageFile = dataURLtoFile(adjustedImageUrl, `adjusted-${Date.now()}.png`);
         addImageToHistory(newImageFile);
     } catch (err) {
-        const errorMessage = err instanceof Error ? err.message : '发生未知错误。';
-        setError(`应用调整失败。 ${errorMessage}`);
+        const errorMessage = err instanceof Error ? err.message : t('errors.unknownError');
+        setError(t('errors.adjustmentFailed', { error: errorMessage }));
         console.error(err);
     } finally {
         setIsLoading(false);
     }
-  }, [currentImage, addImageToHistory]);
+  }, [currentImage, addImageToHistory, t]);
 
   const handleApplyCrop = useCallback(() => {
     if (!completedCrop || !imgRef.current) {
-        setError('请选择要裁剪的区域。');
+        setError(t('errors.noCropArea'));
         return;
     }
 
@@ -197,7 +199,7 @@ const App: React.FC = () => {
     const ctx = canvas.getContext('2d');
 
     if (!ctx) {
-        setError('无法处理裁剪。');
+        setError(t('errors.cannotCrop'));
         return;
     }
 
@@ -223,7 +225,7 @@ const App: React.FC = () => {
     const newImageFile = dataURLtoFile(croppedImageUrl, `cropped-${Date.now()}.png`);
     addImageToHistory(newImageFile);
 
-  }, [completedCrop, addImageToHistory]);
+  }, [completedCrop, addImageToHistory, t]);
 
   const handleUndo = useCallback(() => {
     if (canUndo) {
@@ -302,13 +304,13 @@ const App: React.FC = () => {
     if (error) {
        return (
            <div className="text-center animate-fade-in bg-red-500/10 border border-red-500/20 p-8 rounded-lg max-w-2xl mx-auto flex flex-col items-center gap-4">
-            <h2 className="text-2xl font-bold text-red-300">发生错误</h2>
+            <h2 className="text-2xl font-bold text-red-300">{t('errors.title')}</h2>
             <p className="text-md text-red-400">{error}</p>
             <button
                 onClick={() => setError(null)}
                 className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-6 rounded-lg text-md transition-colors"
               >
-                重试
+                {t('errors.retryButton')}
             </button>
           </div>
         );
@@ -319,10 +321,10 @@ const App: React.FC = () => {
     }
     
     const tabTranslations: Record<Tab, string> = {
-        retouch: '修饰',
-        adjust: '调整',
-        filters: '滤镜',
-        crop: '裁剪'
+        retouch: t('tabs.retouch'),
+        adjust: t('tabs.adjust'),
+        filters: t('tabs.filters'),
+        crop: t('tabs.crop')
     };
 
     const imageDisplay = (
@@ -366,7 +368,7 @@ const App: React.FC = () => {
             {isLoading && (
                 <div className="absolute inset-0 bg-black/70 z-30 flex flex-col items-center justify-center gap-4 animate-fade-in">
                     <Spinner />
-                    <p className="text-gray-300">AI 正在施展魔法...</p>
+                    <p className="text-gray-300">{t('app.loading')}</p>
                 </div>
             )}
             
@@ -412,14 +414,14 @@ const App: React.FC = () => {
             {activeTab === 'retouch' && (
                 <div className="flex flex-col items-center gap-4">
                     <p className="text-md text-gray-400">
-                        {editHotspot ? '很好！现在在下方描述您的局部编辑。' : '在图像上点击一个区域进行精确编辑。'}
+                        {editHotspot ? t('retouch.goodPrompt') : t('retouch.clickPrompt')}
                     </p>
                     <form onSubmit={(e) => { e.preventDefault(); handleGenerate(); }} className="w-full flex items-center gap-2">
                         <input
                             type="text"
                             value={prompt}
                             onChange={(e) => setPrompt(e.target.value)}
-                            placeholder={editHotspot ? "例如，'把我的衬衫颜色改成蓝色'" : "请先在图像上点击一个点"}
+                            placeholder={editHotspot ? t('retouch.placeholder.active') : t('retouch.placeholder.inactive')}
                             className="flex-grow bg-gray-800 border border-gray-700 text-gray-200 rounded-lg p-5 text-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition w-full disabled:cursor-not-allowed disabled:opacity-60"
                             disabled={isLoading || !editHotspot}
                         />
@@ -428,7 +430,7 @@ const App: React.FC = () => {
                             className="bg-gradient-to-br from-blue-600 to-blue-500 text-white font-bold py-5 px-8 text-lg rounded-lg transition-all duration-300 ease-in-out shadow-lg shadow-blue-500/20 hover:shadow-xl hover:shadow-blue-500/40 hover:-translate-y-px active:scale-95 active:shadow-inner disabled:from-blue-800 disabled:to-blue-700 disabled:shadow-none disabled:cursor-not-allowed disabled:transform-none whitespace-nowrap"
                             disabled={isLoading || !prompt.trim() || !editHotspot}
                         >
-                            生成
+                            {t('retouch.generateButton')}
                         </button>
                     </form>
                 </div>
@@ -443,19 +445,19 @@ const App: React.FC = () => {
                 onClick={handleUndo}
                 disabled={!canUndo}
                 className="flex items-center justify-center text-center bg-white/10 border border-white/20 text-gray-200 font-semibold py-3 px-5 rounded-md transition-all duration-200 ease-in-out hover:bg-white/20 hover:border-white/30 active:scale-95 text-base disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-white/5"
-                aria-label="撤销上一步操作"
+                aria-label={t('aria.undoOperation')}
             >
                 <UndoIcon className="w-5 h-5 mr-2" />
-                撤销
+                {t('actions.undo')}
             </button>
             <button 
                 onClick={handleRedo}
                 disabled={!canRedo}
                 className="flex items-center justify-center text-center bg-white/10 border border-white/20 text-gray-200 font-semibold py-3 px-5 rounded-md transition-all duration-200 ease-in-out hover:bg-white/20 hover:border-white/30 active:scale-95 text-base disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-white/5"
-                aria-label="重做上一步操作"
+                aria-label={t('aria.redoOperation')}
             >
                 <RedoIcon className="w-5 h-5 mr-2" />
-                重做
+                {t('actions.redo')}
             </button>
             
             <div className="h-6 w-px bg-gray-600 mx-1 hidden sm:block"></div>
@@ -468,10 +470,10 @@ const App: React.FC = () => {
                   onTouchStart={() => setIsComparing(true)}
                   onTouchEnd={() => setIsComparing(false)}
                   className="flex items-center justify-center text-center bg-white/10 border border-white/20 text-gray-200 font-semibold py-3 px-5 rounded-md transition-all duration-200 ease-in-out hover:bg-white/20 hover:border-white/30 active:scale-95 text-base"
-                  aria-label="按住可查看原始图像"
+                  aria-label={t('aria.compareWithOriginal')}
               >
                   <EyeIcon className="w-5 h-5 mr-2" />
-                  对比
+                  {t('actions.compare')}
               </button>
             )}
 
@@ -480,20 +482,20 @@ const App: React.FC = () => {
                 disabled={!canUndo}
                 className="text-center bg-transparent border border-white/20 text-gray-200 font-semibold py-3 px-5 rounded-md transition-all duration-200 ease-in-out hover:bg-white/10 hover:border-white/30 active:scale-95 text-base disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-transparent"
               >
-                重置
+                {t('actions.reset')}
             </button>
             <button 
                 onClick={handleUploadNew}
                 className="text-center bg-white/10 border border-white/20 text-gray-200 font-semibold py-3 px-5 rounded-md transition-all duration-200 ease-in-out hover:bg-white/20 hover:border-white/30 active:scale-95 text-base"
             >
-                上传新图片
+                {t('actions.uploadNew')}
             </button>
 
             <button 
                 onClick={handleDownload}
                 className="flex-grow sm:flex-grow-0 ml-auto bg-gradient-to-br from-green-600 to-green-500 text-white font-bold py-3 px-5 rounded-md transition-all duration-300 ease-in-out shadow-lg shadow-green-500/20 hover:shadow-xl hover:shadow-green-500/40 hover:-translate-y-px active:scale-95 active:shadow-inner text-base"
             >
-                下载图片
+                {t('actions.download')}
             </button>
         </div>
       </div>

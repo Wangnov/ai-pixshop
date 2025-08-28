@@ -1,0 +1,106 @@
+{
+  "app": {
+    "title": "AI Image Workshop",
+    "loading": "AI is working its magic..."
+  },
+  "startScreen": {
+    "title": "AI-powered photo editing  <0>simplified</0>",
+    "subtitle": "Retouch photos, apply creative filters, or make professional adjustments using simple text prompts. No complex tools needed.",
+    "uploadButton": "Upload Image",
+    "dragAndDrop": "or drag and drop files",
+    "features": {
+      "retouch": {
+        "title": "Precision Retouching",
+        "description": "Click anywhere on the image to precisely remove blemishes, change colors, or add elements."
+      },
+      "filters": {
+        "title": "Creative Filters",
+        "description": "Transform photos with artistic styles. From vintage looks to futuristic glows, find or create the perfect filter."
+      },
+      "adjustments": {
+        "title": "Professional Adjustments",
+        "description": "Enhance lighting, blur backgrounds, or change the mood. Get studio-quality results without complex tools."
+      }
+    }
+  },
+  "tabs": {
+    "retouch": "Retouch",
+    "adjust": "Adjust",
+    "filters": "Filters",
+    "crop": "Crop"
+  },
+  "retouch": {
+    "clickPrompt": "Click on an area of the image for precise editing.",
+    "goodPrompt": "Great! Now describe your local edit below.",
+    "placeholder": {
+      "inactive": "Please click a point on the image first",
+      "active": "e.g., 'change my shirt color to blue'"
+    },
+    "generateButton": "Generate"
+  },
+  "filters": {
+    "title": "Apply Filter",
+    "customPlaceholder": "or describe a custom filter (e.g., '80s synthwave glow')",
+    "applyButton": "Apply Filter",
+    "presets": {
+      "synthwave": "Synthwave",
+      "anime": "Anime",
+      "lomo": "Lomo",
+      "glitch": "Glitch Art"
+    }
+  },
+  "adjustments": {
+    "title": "Apply Professional Adjustments",
+    "customPlaceholder": "or describe an adjustment (e.g., 'change background to forest')",
+    "applyButton": "Apply Adjustment",
+    "presets": {
+      "blur": "Blur Background",
+      "enhance": "Enhance Details",
+      "warmLight": "Warm Light",
+      "studioLight": "Studio Light"
+    }
+  },
+  "crop": {
+    "title": "Crop Image",
+    "instruction": "Click and drag on the image to select crop area.",
+    "aspectRatio": "Aspect Ratio:",
+    "applyButton": "Apply Crop",
+    "ratios": {
+      "free": "Free",
+      "square": "1:1",
+      "widescreen": "16:9"
+    }
+  },
+  "actions": {
+    "undo": "Undo",
+    "redo": "Redo",
+    "compare": "Compare",
+    "reset": "Reset",
+    "uploadNew": "Upload New",
+    "download": "Download"
+  },
+  "errors": {
+    "title": "Error Occurred",
+    "noImage": "No image loaded to edit.",
+    "noPrompt": "Please enter your edit description.",
+    "noHotspot": "Please click on the image to select an area to edit.",
+    "noImageForFilter": "No image loaded to apply filter.",
+    "noImageForAdjustment": "No image loaded to apply adjustment.",
+    "noCropArea": "Please select an area to crop.",
+    "cannotCrop": "Cannot process crop.",
+    "generateFailed": "Failed to generate image. {{error}}",
+    "filterFailed": "Failed to apply filter. {{error}}",
+    "adjustmentFailed": "Failed to apply adjustment. {{error}}",
+    "unknownError": "An unknown error occurred.",
+    "retryButton": "Retry"
+  },
+  "aria": {
+    "undoOperation": "Undo last operation",
+    "redoOperation": "Redo last operation",
+    "compareWithOriginal": "Hold to view original image"
+  },
+  "language": {
+    "switchLanguage": "切换到中文",
+    "currentLanguage": "English"
+  }
+}

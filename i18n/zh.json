@@ -1,0 +1,106 @@
+{
+  "app": {
+    "title": "AI图像工坊",
+    "loading": "AI 正在施展魔法..."
+  },
+  "startScreen": {
+    "title": "AI 驱动的照片编辑  <0>化繁为简</0>",
+    "subtitle": "使用简单的文本提示修饰照片、应用创意滤镜或进行专业调整。无需复杂工具。",
+    "uploadButton": "上传图片",
+    "dragAndDrop": "或拖放文件",
+    "features": {
+      "retouch": {
+        "title": "精准修饰",
+        "description": "点击图像上的任意点，精确去除瑕疵、更改颜色或添加元素。"
+      },
+      "filters": {
+        "title": "创意滤镜",
+        "description": "用艺术风格转换照片。从复古外观到未来光晕，找到或创建完美的滤镜。"
+      },
+      "adjustments": {
+        "title": "专业调整",
+        "description": "增强光照、模糊背景或改变氛围。无需复杂工具即可获得影棚级效果。"
+      }
+    }
+  },
+  "tabs": {
+    "retouch": "修饰",
+    "adjust": "调整",
+    "filters": "滤镜",
+    "crop": "裁剪"
+  },
+  "retouch": {
+    "clickPrompt": "在图像上点击一个区域进行精确编辑。",
+    "goodPrompt": "很好！现在在下方描述您的局部编辑。",
+    "placeholder": {
+      "inactive": "请先在图像上点击一个点",
+      "active": "例如，'把我的衬衫颜色改成蓝色'"
+    },
+    "generateButton": "生成"
+  },
+  "filters": {
+    "title": "应用滤镜",
+    "customPlaceholder": "或描述一个自定义滤镜（例如，'80年代合成波光晕'）",
+    "applyButton": "应用滤镜",
+    "presets": {
+      "synthwave": "合成波",
+      "anime": "动漫",
+      "lomo": "Lomo",
+      "glitch": "故障艺术"
+    }
+  },
+  "adjustments": {
+    "title": "应用专业调整",
+    "customPlaceholder": "或描述一项调整（例如，'将背景更改为森林'）",
+    "applyButton": "应用调整",
+    "presets": {
+      "blur": "模糊背景",
+      "enhance": "增强细节",
+      "warmLight": "暖色调光",
+      "studioLight": "影棚光"
+    }
+  },
+  "crop": {
+    "title": "裁剪图像",
+    "instruction": "在图像上点击并拖动以选择裁剪区域。",
+    "aspectRatio": "宽高比:",
+    "applyButton": "应用裁剪",
+    "ratios": {
+      "free": "自由",
+      "square": "1:1",
+      "widescreen": "16:9"
+    }
+  },
+  "actions": {
+    "undo": "撤销",
+    "redo": "重做",
+    "compare": "对比",
+    "reset": "重置",
+    "uploadNew": "上传新图片",
+    "download": "下载图片"
+  },
+  "errors": {
+    "title": "发生错误",
+    "noImage": "未加载要编辑的图像。",
+    "noPrompt": "请输入您的编辑描述。",
+    "noHotspot": "请在图像上点击以选择要编辑的区域。",
+    "noImageForFilter": "未加载要应用滤镜的图像。",
+    "noImageForAdjustment": "未加载要应用调整的图像。",
+    "noCropArea": "请选择要裁剪的区域。",
+    "cannotCrop": "无法处理裁剪。",
+    "generateFailed": "生成图像失败。 {{error}}",
+    "filterFailed": "应用滤镜失败。 {{error}}",
+    "adjustmentFailed": "应用调整失败。 {{error}}",
+    "unknownError": "发生未知错误。",
+    "retryButton": "重试"
+  },
+  "aria": {
+    "undoOperation": "撤销上一步操作",
+    "redoOperation": "重做上一步操作",
+    "compareWithOriginal": "按住可查看原始图像"
+  },
+  "language": {
+    "switchLanguage": "Switch to English",
+    "currentLanguage": "中文"
+  }
+}
