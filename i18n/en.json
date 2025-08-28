@@ -107,5 +107,13 @@
     "darkMode": "Dark Mode",
     "lightMode": "Light Mode",
     "autoMode": "Follow System"
+  },
+  "modes": {
+    "edit": "Edit",
+    "draw": "Draw"
+  },
+  "draw": {
+    "comingSoon": "Drawing feature coming soon",
+    "switchToEdit": "Click above to switch to Edit mode and start using existing features"
   }
 }

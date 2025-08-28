@@ -107,5 +107,13 @@
     "darkMode": "夜间模式",
     "lightMode": "日间模式",
     "autoMode": "自动跟随系统"
+  },
+  "modes": {
+    "edit": "编辑",
+    "draw": "绘图"
+  },
+  "draw": {
+    "comingSoon": "绘图功能即将推出",
+    "switchToEdit": "点击上方切换到编辑模式开始使用现有功能"
   }
 }
