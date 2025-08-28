@@ -13,12 +13,12 @@ const fileToPart = async (file: File): Promise<{ inlineData: { mimeType: string;
         reader.onload = () => resolve(reader.result as string);
         reader.onerror = error => reject(error);
     });
-    
+
     const arr = dataUrl.split(',');
     if (arr.length < 2) throw new Error("Invalid data URL");
     const mimeMatch = arr[0].match(/:(.*?);/);
     if (!mimeMatch || !mimeMatch[1]) throw new Error("Could not parse MIME type from data URL");
-    
+
     const mimeType = mimeMatch[1];
     const data = arr[1];
     return { inlineData: { mimeType, data } };
@@ -52,10 +52,10 @@ const handleApiResponse = (
         console.error(errorMessage, { response });
         throw new Error(errorMessage);
     }
-    
+
     const textFeedback = response.text?.trim();
-    const errorMessage = `AI 模型没有为 ${context} 返回图像。 ` + 
-        (textFeedback 
+    const errorMessage = `AI 模型没有为 ${context} 返回图像。 ` +
+        (textFeedback
             ? `模型返回了文本: "${textFeedback}"`
             : "这可能是由于安全过滤器或请求过于复杂。请尝试更直接地改写您的提示。");
 
@@ -76,13 +76,13 @@ export const generateEditedImage = async (
     hotspot: { x: number, y: number }
 ): Promise<string> => {
     console.log('Starting generative edit at:', hotspot);
-    const ai = new GoogleGenAI({ 
+    const ai = new GoogleGenAI({
         apiKey: process.env.API_KEY!,
         httpOptions: {
-            baseUrl: 'https://api-proxy.me/gemini'
+
         }
     });
-    
+
     const originalImagePart = await fileToPart(originalImage);
     const prompt = `你是一位专业级照片编辑 AI。你的任务是根据用户的要求，在提供的图像上进行自然的局部编辑。
 用户请求: "${userPrompt}"
@@ -117,13 +117,13 @@ export const generateFilteredImage = async (
     filterPrompt: string,
 ): Promise<string> => {
     console.log(`Starting filter generation: ${filterPrompt}`);
-    const ai = new GoogleGenAI({ 
+    const ai = new GoogleGenAI({
         apiKey: process.env.API_KEY!,
         httpOptions: {
-            baseUrl: 'https://api-proxy.me/gemini'
+
         }
     });
-    
+
     const originalImagePart = await fileToPart(originalImage);
     const prompt = `你是一位专业级照片编辑 AI。你的任务是根据用户的要求，为整个图像应用风格化滤镜。不要改变构图或内容，只应用风格。
 滤镜请求: "${filterPrompt}"
@@ -137,7 +137,7 @@ export const generateFilteredImage = async (
         contents: { parts: [originalImagePart, textPart] },
     });
     console.log('Received response from model for filter.', response);
-    
+
     return handleApiResponse(response, 'filter');
 };
 
@@ -152,13 +152,13 @@ export const generateAdjustedImage = async (
     adjustmentPrompt: string,
 ): Promise<string> => {
     console.log(`Starting global adjustment generation: ${adjustmentPrompt}`);
-    const ai = new GoogleGenAI({ 
+    const ai = new GoogleGenAI({
         apiKey: process.env.API_KEY!,
         httpOptions: {
-            baseUrl: 'https://api-proxy.me/gemini'
+
         }
     });
-    
+
     const originalImagePart = await fileToPart(originalImage);
     const prompt = `你是一位专业级照片编辑 AI。你的任务是根据用户的要求，对整个图像进行自然的全局调整。
 用户请求: "${adjustmentPrompt}"
@@ -177,6 +177,6 @@ export const generateAdjustedImage = async (
         contents: { parts: [originalImagePart, textPart] },
     });
     console.log('Received response from model for adjustment.', response);
-    
+
     return handleApiResponse(response, 'adjustment');
 };

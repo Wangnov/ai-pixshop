@@ -84,7 +84,7 @@ export const generateImageFromText = async (
     const ai = new GoogleGenAI({
         apiKey: process.env.API_KEY!,
         httpOptions: {
-            baseUrl: 'https://api-proxy.me/gemini'
+
         }
     });
 
@@ -153,7 +153,7 @@ export const generateWithReference = async (
     const ai = new GoogleGenAI({
         apiKey: process.env.API_KEY!,
         httpOptions: {
-            baseUrl: 'https://api-proxy.me/gemini'
+
         }
     });
 
@@ -198,7 +198,7 @@ export const optimizePrompt = async (originalPrompt: string): Promise<string> =>
     const ai = new GoogleGenAI({
         apiKey: process.env.API_KEY!,
         httpOptions: {
-            baseUrl: 'https://api-proxy.me/gemini'
+
         }
     });
 
@@ -246,7 +246,7 @@ export const analyzeImage = async (image: File): Promise<{
     const ai = new GoogleGenAI({
         apiKey: process.env.API_KEY!,
         httpOptions: {
-            baseUrl: 'https://api-proxy.me/gemini'
+
         }
     });
 

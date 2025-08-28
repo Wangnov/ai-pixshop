@@ -7,7 +7,8 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../../contexts/ThemeContext';
 import { getThemeStyles } from '../../utils/themeStyles';
-import { generateImageFromText, optimizePrompt, GenerateOptions } from '../../services/geminiDrawService';
+import { generateImageFromText, optimizePrompt } from '../../services/apiClient';
+import { GenerateOptions } from '../../services/geminiDrawService';
 import Spinner from '../Spinner';
 
 interface TextToImagePanelProps {
