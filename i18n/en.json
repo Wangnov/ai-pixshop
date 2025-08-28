@@ -113,7 +113,84 @@
     "draw": "Draw"
   },
   "draw": {
-    "comingSoon": "Drawing feature coming soon",
-    "switchToEdit": "Click above to switch to Edit mode and start using existing features"
+    "title": "AI Drawing Studio", 
+    "subtitle": "Harness the power of AI to create stunning images from text descriptions, reference images, or intelligent analysis",
+    "modes": {
+      "textToImage": "Text to Image",
+      "reference": "Reference Gen",
+      "analysis": "Image Analysis"
+    },
+    "textToImage": {
+      "title": "Generate Image from Text",
+      "placeholder": "Describe the image you want to create (e.g., 'mountain landscape at sunset, oil painting style')",
+      "generateButton": "Generate Image",
+      "optimizeButton": "Optimize Prompt",
+      "presets": {
+        "landscape": "Landscape",
+        "portrait": "Portrait",
+        "abstract": "Abstract Art",
+        "anime": "Anime Style"
+      },
+      "styles": "Style", 
+      "styleOptions": {
+        "photo": "Photography",
+        "art": "Artistic",
+        "illustration": "Illustration",
+        "concept": "Concept Art"
+      },
+      "aspectRatios": {
+        "square": "1:1",
+        "widescreen": "16:9", 
+        "portrait": "9:16",
+        "free": "Free"
+      },
+      "quality": "Quality",
+      "qualityOptions": {
+        "draft": "Draft", 
+        "standard": "Standard",
+        "high": "High Quality"
+      }
+    },
+    "reference": {
+      "title": "Generate with Reference Images",
+      "uploadReference": "Upload Reference Images",
+      "maxImages": "Max 3 images",
+      "prompt": "Describe your creation based on the reference images",
+      "generateButton": "Generate with Reference",
+      "importFromEdit": "Import from Edit Mode"
+    },
+    "analysis": {
+      "title": "Smart Image Analysis",
+      "uploadForAnalysis": "Upload Image for Analysis",
+      "analyzeButton": "Analyze Image",
+      "composition": "Composition Analysis",
+      "colors": "Color Analysis",
+      "suggestions": "Improvement Suggestions",
+      "usePrompt": "Use This Suggestion"
+    },
+    "optimization": {
+      "title": "Prompt Optimization",
+      "optimizing": "Optimizing prompt...",
+      "optimized": "Optimized prompt:",
+      "useOptimized": "Use Optimized",
+      "keepOriginal": "Keep Original"
+    },
+    "results": {
+      "generating": "Generating image...",
+      "analyzing": "Analyzing image...",
+      "generated": "Generation Complete",
+      "useAsReference": "Use as Reference",
+      "editThis": "Edit This Image",
+      "downloadResult": "Download Result"
+    },
+    "errors": {
+      "noPrompt": "Please enter image description",
+      "noReference": "Please upload at least one reference image",
+      "noImageToAnalyze": "Please upload an image to analyze",
+      "generateFailed": "Image generation failed: {{error}}",
+      "optimizeFailed": "Prompt optimization failed: {{error}}",
+      "analysisFailed": "Image analysis failed: {{error}}",
+      "unsupportedFormat": "Unsupported image format"
+    }
   }
 }

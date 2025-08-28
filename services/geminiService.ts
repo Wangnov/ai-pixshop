@@ -76,7 +76,12 @@ export const generateEditedImage = async (
     hotspot: { x: number, y: number }
 ): Promise<string> => {
     console.log('Starting generative edit at:', hotspot);
-    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY! });
+    const ai = new GoogleGenAI({ 
+        apiKey: process.env.API_KEY!,
+        httpOptions: {
+            baseUrl: 'https://api-proxy.me/gemini'
+        }
+    });
     
     const originalImagePart = await fileToPart(originalImage);
     const prompt = `你是一位专业级照片编辑 AI。你的任务是根据用户的要求，在提供的图像上进行自然的局部编辑。
@@ -112,7 +117,12 @@ export const generateFilteredImage = async (
     filterPrompt: string,
 ): Promise<string> => {
     console.log(`Starting filter generation: ${filterPrompt}`);
-    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY! });
+    const ai = new GoogleGenAI({ 
+        apiKey: process.env.API_KEY!,
+        httpOptions: {
+            baseUrl: 'https://api-proxy.me/gemini'
+        }
+    });
     
     const originalImagePart = await fileToPart(originalImage);
     const prompt = `你是一位专业级照片编辑 AI。你的任务是根据用户的要求，为整个图像应用风格化滤镜。不要改变构图或内容，只应用风格。
@@ -142,7 +152,12 @@ export const generateAdjustedImage = async (
     adjustmentPrompt: string,
 ): Promise<string> => {
     console.log(`Starting global adjustment generation: ${adjustmentPrompt}`);
-    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY! });
+    const ai = new GoogleGenAI({ 
+        apiKey: process.env.API_KEY!,
+        httpOptions: {
+            baseUrl: 'https://api-proxy.me/gemini'
+        }
+    });
     
     const originalImagePart = await fileToPart(originalImage);
     const prompt = `你是一位专业级照片编辑 AI。你的任务是根据用户的要求，对整个图像进行自然的全局调整。

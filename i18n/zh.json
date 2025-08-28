@@ -113,7 +113,84 @@
     "draw": "绘图"
   },
   "draw": {
-    "comingSoon": "绘图功能即将推出",
-    "switchToEdit": "点击上方切换到编辑模式开始使用现有功能"
+    "title": "AI绘图创作",
+    "subtitle": "使用AI的力量从文本描述、参考图像或智能分析中创造出惊人的图像",
+    "modes": {
+      "textToImage": "文本生图",
+      "reference": "参考生图",
+      "analysis": "图像分析"
+    },
+    "textToImage": {
+      "title": "从文本生成图像",
+      "placeholder": "描述您想要创作的图像（例如：'夕阳下的山脉，油画风格'）",
+      "generateButton": "生成图像",
+      "optimizeButton": "优化提示词",
+      "presets": {
+        "landscape": "自然风光",
+        "portrait": "人物肖像",
+        "abstract": "抽象艺术",
+        "anime": "动漫风格"
+      },
+      "styles": "风格",
+      "styleOptions": {
+        "photo": "摄影写实",
+        "art": "艺术绘画", 
+        "illustration": "插画风格",
+        "concept": "概念设计"
+      },
+      "aspectRatios": {
+        "square": "1:1",
+        "widescreen": "16:9",
+        "portrait": "9:16",
+        "free": "自由"
+      },
+      "quality": "质量",
+      "qualityOptions": {
+        "draft": "快速",
+        "standard": "标准",
+        "high": "高品质"
+      }
+    },
+    "reference": {
+      "title": "基于参考图像生成",
+      "uploadReference": "上传参考图像",
+      "maxImages": "最多3张",
+      "prompt": "结合参考图像，描述您的创作需求",
+      "generateButton": "基于参考生成",
+      "importFromEdit": "从编辑模式导入"
+    },
+    "analysis": {
+      "title": "智能图像分析",
+      "uploadForAnalysis": "上传图像进行分析",
+      "analyzeButton": "分析图像",
+      "composition": "构图分析",
+      "colors": "色彩分析",
+      "suggestions": "改进建议",
+      "usePrompt": "使用此建议"
+    },
+    "optimization": {
+      "title": "提示词优化",
+      "optimizing": "正在优化提示词...",
+      "optimized": "优化后的提示词：",
+      "useOptimized": "使用优化版本",
+      "keepOriginal": "保持原版"
+    },
+    "results": {
+      "generating": "正在生成图像...",
+      "analyzing": "正在分析图像...",
+      "generated": "生成完成",
+      "useAsReference": "作为参考图",
+      "editThis": "编辑此图",
+      "downloadResult": "下载结果"
+    },
+    "errors": {
+      "noPrompt": "请输入图像描述",
+      "noReference": "请上传至少一张参考图像",
+      "noImageToAnalyze": "请上传要分析的图像",
+      "generateFailed": "图像生成失败：{{error}}",
+      "optimizeFailed": "提示词优化失败：{{error}}",
+      "analysisFailed": "图像分析失败：{{error}}",
+      "unsupportedFormat": "不支持的图像格式"
+    }
   }
 }

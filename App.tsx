@@ -14,6 +14,7 @@ import AdjustmentPanel from './components/AdjustmentPanel';
 import CropPanel from './components/CropPanel';
 import { UndoIcon, RedoIcon, EyeIcon } from './components/icons';
 import StartScreen from './components/StartScreen';
+import DrawPanel from './components/draw/DrawPanel';
 import { useTranslation } from 'react-i18next';
 import { ThemeProvider, useTheme } from './contexts/ThemeContext';
 import { getThemeStyles } from './utils/themeStyles';
@@ -308,16 +309,18 @@ const AppContent: React.FC = () => {
 };
 
   const renderContent = () => {
-    // 绘图模式占位页面
+    // Draw模式
     if (appMode === 'draw') {
       return (
-        <div className="text-center animate-fade-in max-w-2xl mx-auto flex flex-col items-center gap-6">
-          <div className={`${styles.bg.panel} ${styles.border.primary} border rounded-lg p-12`}>
-            <h2 className={`text-3xl font-bold mb-4 ${styles.text.primary}`}>🎨 {t('modes.draw')}</h2>
-            <p className={`text-lg ${styles.text.secondary}`}>{t('draw.comingSoon')}</p>
-            <p className={`text-sm mt-2 ${styles.text.tertiary}`}>{t('draw.switchToEdit')}</p>
-          </div>
-        </div>
+        <DrawPanel
+          onImageGenerated={addImageToHistory}
+          onSwitchToEdit={(imageFile) => {
+            addImageToHistory(imageFile);
+            setAppMode('edit');
+            setActiveTab('retouch');
+          }}
+          referenceImage={currentImage}
+        />
       );
     }
 
